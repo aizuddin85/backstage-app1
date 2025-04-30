@@ -1,0 +1,8 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: hello-world-template
+spec:
+  type: url
+  target: https://github.com/aizuddin85/backstage-app1/blob/main/hello-world/template.yaml
+

@@ -1,0 +1,23 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: hello-world-task
+  title: Hello World Task
+  description: A dummy task that echoes "Hello World"
+spec:
+  owner: your-team
+  type: service
+
+  steps:
+    - id: hello
+      name: Echo Hello World
+      action: shell:script
+      input:
+        script: |
+          echo "Hello World"
+
+  output:
+    text:
+      - title: Done
+        content: "The Hello World task completed successfully."
+

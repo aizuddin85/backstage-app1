@@ -11,7 +11,7 @@ spec:
   steps:
     - id: hello
       name: Echo Hello World
-      action: shell:script
+      action: builtin:script
       input:
         script: |
           echo "Hello World"

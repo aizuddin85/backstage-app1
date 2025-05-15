@@ -1,0 +1,49 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: aks-cluster-template
+  title: Provision AKS Cluster
+  description: Self-service AKS provisioning via Terraform
+spec:
+  owner: platform-team
+  parameters:
+    - title: AKS Cluster Details
+      required: ['clusterName', 'region', 'nodeCount']
+      properties:
+        clusterName:
+          type: string
+          pattern: '^aks-(exp|dec|its)-(prod|nonprod)-[a-z]{3}-[0-9]{3}$'
+          description: AKS cluster name (e.g., aks-exp-prod-weu-001)
+        region:
+          type: string
+          enum: ['eastus', 'westeurope', 'southeastasia']
+        nodeCount:
+          type: integer
+          default: 3
+    - title: Approval
+      required: ['approver']
+      properties:
+        approver:
+          type: string
+          description: Email of approver
+  steps:
+    - id: fetch
+      name: Fetch Terraform Template
+      action: fetch:template
+      input:
+        url: ./skeleton
+    - id: publish
+      name: Push to GitHub
+      action: publish:github
+      input:
+        repoUrl: github.com?repo=aks-${{ parameters.clusterName }}&owner=your-org
+        title: "Provision AKS Cluster"
+        description: "Terraform to provision AKS cluster"
+        protect: true
+    - id: register
+      name: Register Template Output
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
+

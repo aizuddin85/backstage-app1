@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1alpha1
+kind: Template
+metadata:
+  name: aks-cluster-template
+  title: Provision AKS Cluster
+  description: Self-service Terraform template to provision AKS
+  tags:
+    - terraform
+    - azure
+    - aks
+spec:
+  type: service
+  owner: platform-team
+  path: ./template.yaml
+
